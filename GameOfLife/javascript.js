@@ -6,7 +6,7 @@ var gridHeightWidth = [];
 
 //get input for the game grid
 function checkInputFields() {
-    console.log("Hi there pal");
+    
         gridHeightWidth = [];
 
         gridHeightWidth.push(document.getElementById('grid-height').value);
@@ -147,9 +147,10 @@ function onOuterGrid(grid, i, j){
 }
 
 //change cell colour
-function cellColour(cellId){
+function cellColour(cellId, colour){
 
-    console.log(cellId);
+    document.getElementById(cellId).style.backgroundColor = colour;
+
 }
 
 class MainContainer extends React.Component {
@@ -206,30 +207,8 @@ class CreateGameGrid extends React.Component {
     constructor(props){
 
         super(props)
-        this.state = {generation: 0};
-
-        this.updateState = this.updateState.bind(this);
 
     }
-
-    updateState(){
-  
-        gameGrid = (checkAndUpdate(gameGrid));
-
-        for (var i = 0; i < gameGrid.length; i++){
-
-            for (var j = 0; j < gameGrid[i].length; j++){
-
-                cellColour(i + "cell" + j);
-
-            }
-
-        }
-
-        this.setState({generation: 1});
-
-    }
-
 
     createGameRows() {
 
@@ -248,6 +227,8 @@ class CreateGameGrid extends React.Component {
             <Grid >
             
                 {gridReturn}
+
+                <UpdateGameBoard />
         
             </Grid>
 
@@ -261,10 +242,6 @@ class CreateGameGrid extends React.Component {
 
             <div>
 
-                <h1>{gameGrid.length}</h1>
-
-                <Button className="submit-button" bsStyle="primary" bsSize="large" onClick={this.updateState}>Update State</Button>
-
                 {this.createGameRows()}
 
             </div>    
@@ -275,6 +252,65 @@ class CreateGameGrid extends React.Component {
 
 }
 
+class UpdateGameBoard extends React.Component {
+
+    constructor() {
+
+        super()
+
+        this.state = {count: 0};
+
+        this.updateState = this.updateState.bind(this);
+
+    }
+
+    updateState(){
+  
+        gameGrid = (checkAndUpdate(gameGrid));
+
+        for (var i = 0; i < gameGrid.length; i++){
+
+            for (var j = 0; j < gameGrid[i].length; j++){
+
+                if (gameGrid[i][j] === 1){
+
+                    cellColour(i + "cell" + j , "red");
+
+                } else {
+
+                    cellColour(i + "cell" + j, "white");
+
+                }
+
+            }
+
+        }
+
+        var updateCount = this.state.count + 1;
+
+        this.setState({generation: 1});
+
+    }
+
+    render() {
+
+        return (
+
+            <div>
+
+                <h1>{gameGrid.length}</h1>
+
+                <Button className="submit-button" bsStyle="primary" bsSize="large" onClick={this.updateState}>Update State</Button>
+
+                <h3>Generation: {this.state.count}</h3>
+
+            </div>
+
+        );
+
+    }
+
+}
 
 class Textform extends React.Component {
 
