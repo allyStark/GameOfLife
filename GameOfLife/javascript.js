@@ -6,7 +6,7 @@ var gridHeightWidth = [];
 
 //get input for the game grid
 function checkInputFields() {
-    console.log("Hi")
+    console.log("Hi there pal");
         gridHeightWidth = [];
 
         gridHeightWidth.push(document.getElementById('grid-height').value);
