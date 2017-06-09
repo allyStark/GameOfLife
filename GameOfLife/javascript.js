@@ -6,7 +6,7 @@ var gridHeightWidth = [];
 
 //get input for the game grid
 function checkInputFields() {
-
+    console.log("Hi")
         gridHeightWidth = [];
 
         gridHeightWidth.push(document.getElementById('grid-height').value);
@@ -298,7 +298,7 @@ class Textform extends React.Component {
 
         );
 
-    }
+    } 
 
 }
 
