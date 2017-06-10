@@ -173,43 +173,6 @@ class MainContainer extends React.Component {
 
     }
 
-    
-    render() {
-
-        return (
-
-            <div>
-
-                <Row>
-                
-                    <Col className="grid-info" md={3}>Enter grid height: <Textform areaName="grid-height" /></Col>
-
-                    <Col className="grid-info" md={3}>Enter grid width: <Textform areaName="grid-width" /></Col>
-
-                    <Button className="submit-button" bsStyle="primary" bsSize="large" onClick={this.handleClick}>Submit</Button>
-             
-                </Row>
-
-                    
-
-                    <CreateGameGrid gridArr={gameGrid} />                
-
-             </div>
-
-        );
-
-    } 
-
-}
-
-class CreateGameGrid extends React.Component {
-
-    constructor(props){
-
-        super(props)
-
-    }
-
     createGameRows() {
 
         var gridHolder = gameGrid;
@@ -236,19 +199,30 @@ class CreateGameGrid extends React.Component {
     
     }
 
+    
     render() {
 
         return (
 
             <div>
 
-                {this.createGameRows()}
+                <Row>
+                
+                    <Col className="grid-info" md={3}>Enter grid height: <Textform areaName="grid-height" /></Col>
 
-            </div>    
+                    <Col className="grid-info" md={3}>Enter grid width: <Textform areaName="grid-width" /></Col>
 
-        )
+                    <Button className="submit-button" bsStyle="primary" bsSize="large" onClick={this.handleClick}>Submit</Button>
+             
+                </Row>
 
-    }
+                    {this.createGameRows()}               
+
+             </div>
+
+        );
+
+    } 
 
 }
 
@@ -258,7 +232,7 @@ class UpdateGameBoard extends React.Component {
 
         super()
 
-        this.state = {count: 0};
+       this.state = {count: 0}; 
 
         this.updateState = this.updateState.bind(this);
 
@@ -286,9 +260,7 @@ class UpdateGameBoard extends React.Component {
 
         }
 
-        var updateCount = this.state.count + 1;
-
-        this.setState({generation: 1});
+        this.setState({count: this.state.count + 1});
 
     }
 
