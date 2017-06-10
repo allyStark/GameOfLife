@@ -101,8 +101,35 @@ function checkAndUpdate(grid){
             neighbourCount += onOuterGrid(grid, [i + 1], [j - 1]); //bottom left
             neighbourCount += onOuterGrid(grid, [i + 1], [j]); //bottom centre
             neighbourCount += onOuterGrid(grid, [i + 1], [j + 1]); //bottom right
+                
+            if (neighbourCount === 3){
 
-            toPush.push(aliveOrDead(grid[i][j],neighbourCount));
+                toPush.push(1);
+
+            } else if (neighbourCount === 4){
+
+                toPush.push(grid[i][j]);
+
+            } else {
+
+                toPush.push(0);
+
+            }  
+
+            //check if the cell state is different from the last state. If it is, update the cell 
+            if (grid[i][j] !== toPush[j]){
+
+                if (toPush[j] === 1){
+
+                    cellColour(i + "cell" + j , "red");
+
+                } else {
+
+                    cellColour(i + "cell" + j, "white");
+
+                }
+
+            }
 
         }
         
@@ -113,24 +140,6 @@ function checkAndUpdate(grid){
     return newGrid;
 
     }
-
-function aliveOrDead(cell, count){
-
-    if (count === 3){
-
-        return 1;
-
-    } else if (count === 4){
-
-        return cell;
-
-    } else {
-
-        return 0;
-
-    }
-
-}
 
 function onOuterGrid(grid, i, j){
 
@@ -232,34 +241,16 @@ class UpdateGameBoard extends React.Component {
 
         super()
 
-       this.state = {count: 0}; 
+        this.state = {count: 0};
 
         this.updateState = this.updateState.bind(this);
 
     }
 
     updateState(){
-  
+
         gameGrid = (checkAndUpdate(gameGrid));
-
-        for (var i = 0; i < gameGrid.length; i++){
-
-            for (var j = 0; j < gameGrid[i].length; j++){
-
-                if (gameGrid[i][j] === 1){
-
-                    cellColour(i + "cell" + j , "red");
-
-                } else {
-
-                    cellColour(i + "cell" + j, "white");
-
-                }
-
-            }
-
-        }
-
+      
         this.setState({count: this.state.count + 1});
 
     }
@@ -274,9 +265,29 @@ class UpdateGameBoard extends React.Component {
 
                 <Button className="submit-button" bsStyle="primary" bsSize="large" onClick={this.updateState}>Update State</Button>
 
-                <h3>Generation: {this.state.count}</h3>
+                <Button className="submit-button" bsStyle="primary" bsSize="large" >Play</Button>
+
+                <Button className="submit-button" bsStyle="primary" bsSize="large" >Pause</Button>
+
+                <Button className="submit-button" bsStyle="primary" bsSize="large" >Clear Board</Button>
+
+                <GenerationCount count={this.state.count} />
 
             </div>
+
+        );
+
+    }
+
+}
+
+class GenerationCount extends React.Component {
+
+    render() {
+
+        return (
+            
+            <h3>Generation: {this.props.count}</h3>
 
         );
 
